@@ -1,0 +1,270 @@
+{
+  "size" : 100,
+  "query" : {
+    "filtered" : {
+      "filter" : {
+        "and" : {
+          "filters" : [ {
+            "or" : {
+              "filters" : [ 
+			  
+							{
+								"and" : {
+									"filters" : [ {
+										"term" : {
+										  "attributes.itemType" : "Gem"
+										}
+									  }, {
+										"range" : {
+										  "properties.Gem.Quality" : {
+											"gte" : 20.0
+										  }
+										}
+									  }, {
+										"range" : {
+										  "shop.chaosEquiv" : {
+											"gte" : 0.006,
+											"lte" : 1.0
+										  }
+										}
+									  } ]
+								}
+							},
+			  
+							{
+								"and" : {
+									  "filters" : [ {
+										"term" : {
+											  "info.name" : "Aegis Aurora"
+											}
+									  }, {
+										"range" : {
+										  "shop.chaosEquiv" : {
+											"gte" : 0.006,
+											"lte" : 120.0
+										  }
+										}
+									  } ]
+								}
+							},
+							
+							{
+								"and" : {
+									  "filters" : [ {
+										"term" : {
+											  "info.name" : "Maligaro's Virtuosity"
+											}
+									  }, {
+										"range" : {
+										  "shop.chaosEquiv" : {
+											"gte" : 0.006,
+											"lte" : 40.0
+										  }
+										}  
+									  } ]
+								}
+							},
+							
+							{
+								"term" : {
+											  "info.name" : "Headhunter"
+								}
+							},
+							
+							{
+								"and" : {
+									  "filters" : [ {
+										"term" : {
+											  "info.name" : "The Whispering Ice"
+											}
+									  }, {
+										"range" : {
+										  "shop.chaosEquiv" : {
+											"gte" : 0.006,
+											"lte" : 40.0
+										  }
+										}  
+									  } ]
+								}
+							},
+							
+							{
+								"and" : {
+									  "filters" : [ {
+										"term" : {
+											  "info.name" : "Rat's Nest"
+											}
+									  }, {
+										"range" : {
+										  "shop.chaosEquiv" : {
+											"gte" : 0.006,
+											"lte" : 100.0
+										  }
+										}  
+									  } ]
+								}
+							},
+							
+							{
+								"and" : {
+									  "filters" : [ {
+										"term" : {
+											  "info.name" : "The Doctor"
+											}
+									  }, {
+										"range" : {
+										  "shop.chaosEquiv" : {
+											"gte" : 0.006,
+											"lte" : 240.0
+										  }
+										}  
+									  } ]
+								}
+							},
+							
+							{
+								"and" : {
+									  "filters" : [ {
+										"term" : {
+											  "info.name" : "Rainbowstride Conjurer Boots"
+											}
+									  }, {
+										"range" : {
+										  "shop.chaosEquiv" : {
+											"gte" : 0.006,
+											"lte" : 35.0
+										  }
+										}  
+									  } ]
+								}
+							},
+							
+							{
+								"and" : {
+									  "filters" : [ {
+										"term" : {
+											  "info.name" : "Prism Guardian Archon Kite Shield"
+											}
+									  }, {
+										"range" : {
+										  "shop.chaosEquiv" : {
+											"gte" : 0.006,
+											"lte" : 35.0
+										  }
+										}  
+									  } ]
+								}
+							},
+							
+							{
+								"and" : {
+									  "filters" : [ {
+										"term" : {
+											  "info.name" : "Rathpith Globe"
+											}
+									  }, {
+										"range" : {
+										  "shop.chaosEquiv" : {
+											"gte" : 0.006,
+											"lte" : 80.0
+										  }
+										}  
+									  } ]
+								}
+							},
+							
+							{
+								"and" : {
+									  "filters" : [ {
+										"term" : {
+											  "info.name" : "Belly of the Beast"
+											}
+									  }, {
+										"range" : {
+										  "shop.chaosEquiv" : {
+											"gte" : 0.006,
+											"lte" : 60.0
+										  }
+										}  
+									  } ]
+								}
+							},
+							
+							{
+								"and" : {
+									  "filters" : [ {
+										"term" : {
+											  "info.name" : "Alpha's Howl"
+											}
+									  }, {
+										"range" : {
+										  "shop.chaosEquiv" : {
+											"gte" : 0.006,
+											"lte" : 40.0
+										  }
+										}  
+									  } ]
+								}
+							},
+							
+							{
+								"and" : {
+									  "filters" : [ {
+										"term" : {
+											  "info.name" : "The Pack Leader"
+											}
+									  }, {
+										"range" : {
+										  "shop.chaosEquiv" : {
+											"gte" : 0.006,
+											"lte" : 15.0
+										  }
+										}  
+									  } ]
+								}
+							},
+							
+							{
+								"and" : {
+									  "filters" : [ {
+										"term" : {
+											  "info.name" : "Pledge of Hands"
+											}
+									  }, {
+										"range" : {
+										  "shop.chaosEquiv" : {
+											"gte" : 0.006,
+											"lte" : 80.0
+										  }
+										}  
+									  }, {
+										 "range" : {
+										  "mods.Staff.explicit.#% increased Spell Damage" : {
+											"gte" : 148.0
+										  }
+										}
+									  } ]
+								}
+							}
+			  
+			  ]
+            }
+          }, {
+            "term" : {
+              "attributes.league" : "Flashback Event (IC001)"
+            }
+          }, {
+			"term" : {
+			  "shop.verified" : "yes"
+			}
+		  } ]
+        }
+      }
+    }
+  },
+  "sort" : [ {
+    "shop.chaosEquiv" : {
+      "order" : "asc"
+    }
+  } ]
+}

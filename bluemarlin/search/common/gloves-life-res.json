@@ -1,0 +1,52 @@
+{
+  "size" : 100,
+  "query" : {
+    "filtered" : {
+      "filter" : {
+        "and" : {
+          "filters" : [ {
+            "term" : {
+              "attributes.league" : "Flashback Event (IC001)"
+            }
+          }, {
+            "or" : {
+              "filters" : [ {
+                "term" : {
+                  "attributes.itemType" : "Gloves"
+                }
+              } ]
+            }
+          }, {
+            "range" : {
+              "modsPseudo.maxLife" : {
+                "gte" : 70.0
+              }
+            }
+          }, {
+            "range" : {
+              "modsPseudo.eleResistTotal" : {
+                "gte" : 60.0
+              }
+            }
+          }, {
+            "range" : {
+              "shop.chaosEquiv" : {
+                "gte" : 1.0,
+                "lte" : 15.0
+              }
+            }
+          }, {
+            "term" : {
+              "shop.verified" : "yes"
+            }
+          } ]
+        }
+      }
+    }
+  },
+  "sort" : [ {
+    "shop.chaosEquiv" : {
+      "order" : "asc"
+    }
+  } ]
+}

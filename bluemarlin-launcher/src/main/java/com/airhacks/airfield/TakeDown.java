@@ -97,9 +97,9 @@ public class TakeDown {
             newChanges = true;
         }
         if (newChanges) {
-        	ps.println("+Blackmarket successfully updated");
+        	ps.println("+Bluemarlin successfully updated");
 		} else {
-			ps.println("+Blackmarket is up-to-date");
+			ps.println("+Bluemarlin is up-to-date");
 		}
         return newChanges;
     }

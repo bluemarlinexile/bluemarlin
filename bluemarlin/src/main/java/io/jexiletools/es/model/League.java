@@ -15,36 +15,18 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
-.root{
-    -fx-font-size: 10pt;
-    /*-fx-font-family: "Courier New";*/
-    -fx-base: #555555;
-    /*-fx-background: rgb(225, 228, 203);*/
-}
+package io.jexiletools.es.model;
 
-.label {
-	-fx-text-fill: #000000;
-}
+import java.util.Arrays;
+import java.util.List;
 
-#root {
-    -fx-padding: 1px;
-}
+/**
+ * @author thirdy
+ *
+ */
+public class League {
 
-#backgroundImageView {
-}
-#updaterMessagesTextAreaPane * {
-	-fx-background-color: transparent;
-	/*-fx-opacity: 0.90;*/
-	-fx-text-fill: green;
-    -fx-font-size: 8pt;
-    -fx-text-alignment: left;
-    -fx-font-family: "Calibri Light";
-}
-#changelogTextAreaPane * {
-	-fx-background-color: transparent;
-	/*-fx-opacity: 0.90;*/
-	-fx-text-fill: white;
-    -fx-font-size: 10pt;
-    -fx-text-alignment: left;
-    -fx-font-family: "Consolas";
+	public static List<String> names() {
+		return Arrays.asList("Flashback Event (IC001)", "Flashback Event HC (IC002)", "Standard", "Hardcore");
+	}
 }

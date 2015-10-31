@@ -15,36 +15,26 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
-.root{
-    -fx-font-size: 10pt;
-    /*-fx-font-family: "Courier New";*/
-    -fx-base: #555555;
-    /*-fx-background: rgb(225, 228, 203);*/
-}
+package io.github.bluemarlin.util.ex;
 
-.label {
-	-fx-text-fill: #000000;
-}
+/**
+ *
+ * @author thirdy
+ */
+public class BlackmarketException extends Exception {
 
-#root {
-    -fx-padding: 1px;
-}
+	private static final long serialVersionUID = 1L;
 
-#backgroundImageView {
-}
-#updaterMessagesTextAreaPane * {
-	-fx-background-color: transparent;
-	/*-fx-opacity: 0.90;*/
-	-fx-text-fill: green;
-    -fx-font-size: 8pt;
-    -fx-text-alignment: left;
-    -fx-font-family: "Calibri Light";
-}
-#changelogTextAreaPane * {
-	-fx-background-color: transparent;
-	/*-fx-opacity: 0.90;*/
-	-fx-text-fill: white;
-    -fx-font-size: 10pt;
-    -fx-text-alignment: left;
-    -fx-font-family: "Consolas";
+	public BlackmarketException(Exception ex) {
+        super(ex);
+    }
+	
+	public BlackmarketException(String msg, Exception ex) {
+		super(msg, ex);
+	}
+
+	public BlackmarketException(String msg) {
+		super(msg);
+	}
+    
 }

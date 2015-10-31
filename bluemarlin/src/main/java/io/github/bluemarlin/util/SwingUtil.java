@@ -15,36 +15,30 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
-.root{
-    -fx-font-size: 10pt;
-    /*-fx-font-family: "Courier New";*/
-    -fx-base: #555555;
-    /*-fx-background: rgb(225, 228, 203);*/
-}
+package io.github.bluemarlin.util;
 
-.label {
-	-fx-text-fill: #000000;
-}
+import java.awt.Desktop;
+import java.net.URI;
 
-#root {
-    -fx-padding: 1px;
-}
+import io.github.bluemarlin.util.ex.BlackmarketException;
 
-#backgroundImageView {
-}
-#updaterMessagesTextAreaPane * {
-	-fx-background-color: transparent;
-	/*-fx-opacity: 0.90;*/
-	-fx-text-fill: green;
-    -fx-font-size: 8pt;
-    -fx-text-alignment: left;
-    -fx-font-family: "Calibri Light";
-}
-#changelogTextAreaPane * {
-	-fx-background-color: transparent;
-	/*-fx-opacity: 0.90;*/
-	-fx-text-fill: white;
-    -fx-font-size: 10pt;
-    -fx-text-alignment: left;
-    -fx-font-family: "Consolas";
+/**
+ * @author thirdy
+ *
+ */
+public class SwingUtil {
+	public static void openUrlViaBrowser(String url) throws BlackmarketException {
+		String s = url;
+		if (Desktop.isDesktopSupported()) {
+			try {
+				Desktop.getDesktop().browse(new URI(s));
+			} catch (Exception e) {
+				throw new BlackmarketException(
+						"Error on opening browser, address: " + s + ": " + e.getMessage(), e
+							);
+			}
+		} else {
+			throw new BlackmarketException("Launch browser failed, please manually visit: " + s);
+		}
+	}
 }
