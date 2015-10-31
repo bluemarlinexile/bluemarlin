@@ -1,0 +1,91 @@
+/*
+ * Copyright (C) 2015 thirdy
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+ */
+.root{
+    -fx-font-size: 10pt;
+    /*-fx-font-family: "Courier New";*/
+    -fx-base: #555555;
+    /*-fx-background: rgb(225, 228, 203);*/
+}
+
+.label {
+	-fx-text-fill: #000000;
+}
+
+#root {
+    -fx-padding: 1px;
+}
+
+#backgroundImageView {
+}
+#updaterMessagesTextAreaPane * {
+	-fx-background-color: transparent;
+	/*-fx-opacity: 0.90;*/
+	-fx-text-fill: green;
+    -fx-font-size: 8pt;
+    -fx-text-alignment: left;
+    -fx-font-family: "Calibri Light";
+}
+#changelogTextAreaPane * {
+	-fx-background-color: transparent;
+	/*-fx-opacity: 0.90;*/
+	-fx-text-fill: white;
+    -fx-font-size: 10pt;
+    -fx-text-alignment: left;
+    -fx-font-family: "Consolas";
+}
+#launchBtn {
+	-fx-effect: dropshadow( three-pass-box , rgba(0, 0, 0, 0.9) , 0, 0.5 , 1.0 , 0 );
+}
+
+.separator *.line { 
+	-fx-border-style: solid;
+	-fx-border-width: 1px;
+	-fx-effect: dropshadow(one-pass-box, black, 2, 0.3, 1, 1);
+}
+
+.toggle-button:selected {
+	-fx-text-fill: -fx-focus-color;
+}
+
+/* Window Button Styles */
+.window-button {
+    -fx-skin: "com.sun.javafx.scene.control.skin.ButtonSkin";
+    -fx-background-color: #616161, #464646, #505050;
+    -fx-background-insets: 0,1,2;
+    -fx-background-radius: 6,5,4;
+    -fx-padding: 0 0 0 0;
+    /* workaround for button sizing */
+    -fx-font-size: 1px;
+}
+.window-button:focused {
+    -fx-background-color: -fx-accent, #464646, #505050;
+    -fx-background-insets: -0.4,1,2;
+    -fx-background-radius: 6.4,5,4;
+}
+.window-button:hover {
+    -fx-background-color: #616161, white, -fx-accent;
+}
+.window-button:pressed {
+    -fx-background-color: #616161, white, #303030;
+}
+.window-button Rectangle {
+    -fx-fill: #949494;
+}
+.window-button:hover Rectangle {
+    -fx-fill: white;
+}
