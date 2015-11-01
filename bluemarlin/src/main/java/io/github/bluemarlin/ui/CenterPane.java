@@ -40,7 +40,8 @@ public class CenterPane extends SplitPane {
 
 		getItems().addAll(leftSide, rightSide);
 
-		setDividerPositions(0.3f, 0.9f);
+		SplitPane.setResizableWithParent(leftSide, Boolean.FALSE);
+		setDividerPositions(0.17f);
 	}
 
 	public List<SearchTreeItem> durianSearchTreeItems() {

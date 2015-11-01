@@ -19,6 +19,8 @@ package io.github.bluemarlin.ui;
 
 import io.github.bluemarlin.service.ExileToolsLastIndexUpdateService;
 import io.github.bluemarlin.ui.fx.HBoxSpacer;
+import io.github.bluemarlin.util.SwingUtil;
+import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 
@@ -31,7 +33,14 @@ public class BottomPane extends HBox {
 	private final ExileToolsLastIndexUpdateService lastIndexUpdateService = new ExileToolsLastIndexUpdateService();
 
 	public BottomPane() {
-		Label bottomLabel = new Label("Status: Ready");
+		Hyperlink bottomLabel = new Hyperlink("http://bluemarlinexile.github.io/");
+		bottomLabel.setOnAction(e -> {
+			try {
+				SwingUtil.openUrlViaBrowser(bottomLabel.getText());
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		});
 		
 		Label indexerLastUpdateText = new Label("Indexer Last Update: ");
 		Label indexerLastUpdateValueText = new Label();

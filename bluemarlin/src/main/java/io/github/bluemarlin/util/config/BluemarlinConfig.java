@@ -40,6 +40,7 @@ public class BluemarlinConfig  {
 	private static final String KEY_WIDGET_HEIGHT = "widget.height";
 	private static final String KEY_BLUEMARLINE_VERSION = "bluemarline.version";
 	private static final String KEY_API_LADDER_LEAGUES = "api.ladder.leagues";
+	private static final String KEY_RENDERER_DEFAULT = "renderer.default";
 	private static Properties properties;
 	
 	public static void init() throws FileNotFoundException, IOException {
@@ -58,7 +59,7 @@ public class BluemarlinConfig  {
 			file.createNewFile();
 			Properties defaults = new Properties();
 			defaults.setProperty(KEY_BLUEMARLINE_VERSION, BluemarlinApplication.VERSION);
-			defaults.setProperty(KEY_API_LADDER_LEAGUES, "flashback2,flashback2hc,standard,hardcore");
+			defaults.setProperty(KEY_RENDERER_DEFAULT, "renderers/classic/index.html");
 			defaults.setProperty(KEY_WIDGET_WIDTH, "130");
 			defaults.setProperty(KEY_WIDGET_HEIGHT, "70");
 			FileOutputStream fos = new FileOutputStream(file);
@@ -67,11 +68,6 @@ public class BluemarlinConfig  {
 		}
 	}
 	
-	public static List<String> apiLadderLeagues() {
-		String ladderLeaguesStr = properties.getProperty(KEY_API_LADDER_LEAGUES);
-		return Arrays.asList(ladderLeaguesStr.split(","));
-	}
-
 	public static int widgetHeight() {
 		String widgetheight = properties.getProperty(KEY_WIDGET_HEIGHT);
 		return Integer.parseInt(widgetheight);
@@ -80,6 +76,10 @@ public class BluemarlinConfig  {
 	public static int widgetWidth() {
 		String widgetWidth = properties.getProperty(KEY_WIDGET_WIDTH);
 		return Integer.parseInt(widgetWidth);
+	}
+
+	public static String defaultRenderer() {
+		return properties.getProperty(KEY_RENDERER_DEFAULT);
 	}
 
 //	public void save() {

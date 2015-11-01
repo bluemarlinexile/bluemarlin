@@ -17,6 +17,8 @@
  */
 package io.github.bluemarlin.ui.searchview;
 
+import java.net.URI;
+import java.net.URL;
 import java.nio.file.Paths;
 
 import io.github.bluemarlin.Main;
@@ -25,6 +27,7 @@ import io.github.bluemarlin.util.Dialogs;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.concurrent.Worker;
+import javafx.concurrent.Worker.State;
 import javafx.scene.Node;
 import javafx.scene.layout.StackPane;
 import javafx.scene.web.WebEngine;

@@ -1,3 +1,5 @@
+` This is a comment
+` See documentation about bluemarline search files at http://bluemarlinexile.github.io/searchfile.html
 {
   "size" : 100,
   "query" : {

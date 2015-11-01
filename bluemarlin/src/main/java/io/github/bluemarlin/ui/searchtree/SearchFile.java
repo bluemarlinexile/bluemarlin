@@ -28,6 +28,7 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import io.github.bluemarlin.Main;
+import io.github.bluemarlin.util.config.BluemarlinConfig;
 
 /**
  * @author thirdy
@@ -54,12 +55,12 @@ public class SearchFile {
 		
 		renderer = comments.stream()
 				.filter(c -> c.contains("$renderer")).findFirst()
-				.orElse("classic");
+				.orElse("default");
 		
-		if (!"classic".equals(renderer)) {
-			renderer = StringUtils.substringAfter(renderer, "=");
+		if ("default".equals(renderer)) {
+			renderer = BluemarlinConfig.defaultRenderer();
 		} else {
-			renderer = "renderers/classic/index.html";
+			renderer = StringUtils.substringAfter(renderer, "=");
 		}
 		
 		jsonSearch = lines.stream()
