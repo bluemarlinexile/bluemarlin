@@ -18,6 +18,9 @@
 package io.github.bluemarlin.util;
 
 import java.awt.Desktop;
+import java.awt.Toolkit;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.StringSelection;
 import java.net.URI;
 
 import io.github.bluemarlin.util.ex.BlackmarketException;
@@ -40,5 +43,11 @@ public class SwingUtil {
 		} else {
 			throw new BlackmarketException("Launch browser failed, please manually visit: " + s);
 		}
+	}
+	
+	public static void copyToClipboard(String s) {
+		StringSelection stringSelection = new StringSelection(s);
+			Clipboard clpbrd = Toolkit.getDefaultToolkit().getSystemClipboard();
+			clpbrd.setContents(stringSelection, null);
 	}
 }

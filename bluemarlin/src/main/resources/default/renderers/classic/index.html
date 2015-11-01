@@ -2,6 +2,8 @@
 <html>
 <head>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<link rel="stylesheet" href="styles.css">
+ 
 <script>
 
 	/*
@@ -12,30 +14,158 @@
      - ladderOnlinePlayers
 	*/
 	function onBluemarlineReady() {
-		$("#result-content").text(searchResult.getJsonString());
-		$("#query-content").text(searchFile.getJsonSearch());
-		$("#ladder-content").text(ladderOnlinePlayers);
+		onlinePlayers = JSON.parse(ladderOnlinePlayers)		
+	   var searchResultJSON = JSON.parse(searchResult.getJsonString());
+	   var hits = searchResultJSON['hits']['hits']
+	   var resultsContainer = $("<table border='1'></table>")
+	   
+	   for (var i = 0; i < hits.length; i++) {
+			var row = createRow(hits[i])
+			resultsContainer.append(row)
+	   }
+	   
+	   $("#result-content").append(resultsContainer)
 	}
+	
+	var onlinePlayers;
 
 $(document).ready(function(){
 
 });
+
+function createRow(rowData) {
+	var row = $("<tr />")
+	var source = rowData['_source']
+	
+	var uuid = source['uuid'];
+	source['info']['uuid'] = uuid;
+	
+	var player = lookupPlayerLadder(source['shop']['sellerAccount'])
+	
+	delete source.md5sum;
+	delete source.uuid;
+	delete source.info.icon; // annoyingly long, dunno how to do css word wrap, so..
+	if(player) {
+		source['shop']['online'] = player.online
+	}
+	
+	// lets make the shop td the first one
+	var shopTd = createTd(source, 'shop')
+	row.append(shopTd);
+	
+	for(key in source) {
+		if(key != 'shop') {
+			var td = createTd(source, key)
+			row.append(td)
+		}
+	}
+	
+	// player ladder info td
+	if(player) {
+		var playerTd = createPlayerLadderInfoTd(player)
+		row.append(playerTd)
+	}
+	
+	return row;
+}
+
+function createPlayerLadderInfoTd(player) {
+		var td = $("<td />")
+		var data = syntaxHighlight(player);
+		td.append($("<b>Player Ladder Info</b>"))
+		td.append($("<pre>" + data + "</pre>"));
+		return td;
+}
+
+function createTd(source, key) {
+		var td = $("<td />")
+		var dataobj = source[key];
+		
+		// http://stackoverflow.com/questions/4810841/how-can-i-pretty-print-json-using-javascript
+		var data = syntaxHighlight(dataobj);
+		
+		td.append($("<b>" + key + "</b>"))
+		td.append($("<pre>" + data + "</pre>"));
+		
+		if(key == 'shop') td.append(createShopDiv(source))
+		return td;
+}
+
+function createShopDiv(dataobj) {
+	var shopDiv = $("<div />")
+	var button = $("<button>Want to buy</button>")
+	
+	var player = lookupPlayerLadder(dataobj['shop']['sellerAccount'])
+	var wtbMsg = createWtbMsg(dataobj, player)
+	
+	$(button).click(function() {
+	  blueMarlineCallback.copyToClipboard(wtbMsg)
+	})
+	
+	shopDiv.append(button)
+	return shopDiv
+}
+
+function createWtbMsg(dataobj, player) {
+	var threadid = dataobj['shop']['threadid']
+	var sellerIGN = dataobj['shop']['sellerIGN']
+	if(
+		(!sellerIGN || sellerIGN == "")
+		&& player
+	) {
+		sellerIGN = player['charName']
+	}
+	
+	if(sellerIGN && sellerIGN != "") {
+		var currency = dataobj['shop']['currency'] // todo, abbreviate
+		var amount = dataobj['shop']['amount']
+		var price = (currency && amount) ? " for " + currency + " " + amount : ""
+		return "@" + sellerIGN + " Hi, I would like to buy your " + dataobj['info']['fullName'] + price + " in " + dataobj['attributes']['league'] + ". Found your item using Bluemarline."
+	} else {
+		return "https://www.pathofexile.com/forum/view-thread/" + threadid
+	}
+}
+
+function lookupPlayerLadder(sellerAccount) {
+	var player = null
+	for (key in onlinePlayers) {
+		if(key.indexOf(sellerAccount) != -1) {
+			player = onlinePlayers[key]
+			break
+		}
+	}
+	return player
+}
+
+function syntaxHighlight(json) {
+    if (typeof json != 'string') {
+         json = JSON.stringify(json, undefined, 2);
+    }
+    json = json.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    return json.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, function (match) {
+        var cls = 'number';
+        if (/^"/.test(match)) {
+            if (/:$/.test(match)) {
+                cls = 'key';
+            } else {
+                cls = 'string';
+            }
+        } else if (/true|false/.test(match)) {
+            cls = 'boolean';
+        } else if (/null/.test(match)) {
+            cls = 'null';
+        }
+        return '<span class="' + cls + '">' + match + '</span>';
+    });
+}
+
 </script>
 </head>
 <body>
-<h1>Renderer: Classic</h1>
+<h4>Renderer: Classic</h4>
 
-<h2>Result</h2>
+<div id="result-content"></div>
 
-<pre id="result-content"></pre>
-
-<h2>Query</h2>
-
-<pre id="query-content"></pre>
-
-<h2>Ladder Online Players</h2>
-
-<pre id="ladder-content"></pre>
- 
 </body>
 </html>
+

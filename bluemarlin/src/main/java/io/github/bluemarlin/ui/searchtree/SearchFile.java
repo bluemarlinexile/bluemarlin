@@ -65,6 +65,7 @@ public class SearchFile {
 		
 		jsonSearch = lines.stream()
 				.filter(l -> !l.startsWith("`"))
+				.map(l -> l.replace("$DEFAULT_LEAGUE", BluemarlinConfig.defaultLeague()))
 				.collect(Collectors.joining(System.lineSeparator()));
 	}
 

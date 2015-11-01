@@ -8,7 +8,7 @@
         "and" : {
           "filters" : [ {
             "term" : {
-              "attributes.league" : "Flashback Event (IC001)"
+              "attributes.league" : "$DEFAULT_LEAGUE"
             }
           }, {
             "or" : {

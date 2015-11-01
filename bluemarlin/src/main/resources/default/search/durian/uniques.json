@@ -12,29 +12,6 @@
 			  
 							{
 								"and" : {
-									"filters" : [ {
-										"term" : {
-										  "attributes.itemType" : "Gem"
-										}
-									  }, {
-										"range" : {
-										  "properties.Gem.Quality" : {
-											"gte" : 20.0
-										  }
-										}
-									  }, {
-										"range" : {
-										  "shop.chaosEquiv" : {
-											"gte" : 0.006,
-											"lte" : 1.0
-										  }
-										}
-									  } ]
-								}
-							},
-			  
-							{
-								"and" : {
 									  "filters" : [ {
 										"term" : {
 											  "info.name" : "Aegis Aurora"
@@ -219,7 +196,7 @@
             }
           }, {
             "term" : {
-              "attributes.league" : "Flashback Event (IC001)"
+              "attributes.league" : "$DEFAULT_LEAGUE"
             }
           }, {
 			"term" : {

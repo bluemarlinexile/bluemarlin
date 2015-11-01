@@ -1,0 +1,64 @@
+` This is a comment
+` See documentation about bluemarline search files at http://bluemarlinexile.github.io/searchfile.html
+{
+  "size" : 100,
+  "query" : {
+    "filtered" : {
+      "filter" : {
+        "and" : {
+          "filters" : [ {
+				 "and" : {
+						"filters" : [ {
+							"term" : {
+							  "attributes.itemType" : "Bow"
+							}
+						  },  {
+				            "bool" : {
+				              "must" : [ {
+				                "range" : {
+				                  "mods.Bow.explicit.+# to Level of Socketed Bow Gems" : {
+				                    "from" : 2.0,
+				                    "to" : null,
+				                    "include_lower" : true,
+				                    "include_upper" : true
+				                  }
+				                }
+				              }, {
+				                "range" : {
+				                  "mods.Bow.explicit.+# to Level of Socketed Gems" : {
+				                    "from" : 1.0,
+				                    "to" : null,
+				                    "include_lower" : true,
+				                    "include_upper" : true
+				                  }
+				                }
+				              } ]
+				            }
+				          }, {
+							"range" : {
+							  "shop.chaosEquiv" : {
+								"gte" : 0.006,
+								"lte" : 35.0
+							  }
+							}
+						  } ]
+				      }
+			}, {
+            "term" : {
+              "attributes.league" : "$DEFAULT_LEAGUE"
+            }
+          }, {
+			"term" : {
+			  "shop.verified" : "yes"
+			}
+		  } ]
+        }
+      }
+    }
+  },
+  "sort" : [ {
+    "shop.chaosEquiv" : {
+      "order" : "asc"
+    }
+  } ]
+}

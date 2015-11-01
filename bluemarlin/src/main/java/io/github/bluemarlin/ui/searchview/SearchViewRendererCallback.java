@@ -17,10 +17,16 @@
  */
 package io.github.bluemarlin.ui.searchview;
 
+import io.github.bluemarlin.util.SwingUtil;
+
 /**
  * @author thirdy
  *
  */
 public class SearchViewRendererCallback {
+	
+	public void copyToClipboard(String s) {
+		SwingUtil.copyToClipboard(s);
+	}
 	
 }

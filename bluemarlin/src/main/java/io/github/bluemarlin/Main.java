@@ -29,7 +29,7 @@ import javafx.application.Application;
 
 public class Main {
 	
-	public static final boolean DEVELOPMENT_MODE = true;
+	public static final boolean DEVELOPMENT_MODE = false;
 	public static final boolean DURIAN_MODE_ENABLED = true;
 	public static final boolean RAW_RENDERER_ENABLED = false;
 

@@ -22,8 +22,6 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Properties;
 
 import io.github.bluemarlin.Main;
@@ -39,8 +37,8 @@ public class BluemarlinConfig  {
 	private static final String KEY_WIDGET_WIDTH = "widget.width";
 	private static final String KEY_WIDGET_HEIGHT = "widget.height";
 	private static final String KEY_BLUEMARLINE_VERSION = "bluemarline.version";
-	private static final String KEY_API_LADDER_LEAGUES = "api.ladder.leagues";
 	private static final String KEY_RENDERER_DEFAULT = "renderer.default";
+	private static final String KEY_LEAGUE_DEFAULT = "league.default";
 	private static Properties properties;
 	
 	public static void init() throws FileNotFoundException, IOException {
@@ -60,6 +58,7 @@ public class BluemarlinConfig  {
 			Properties defaults = new Properties();
 			defaults.setProperty(KEY_BLUEMARLINE_VERSION, BluemarlinApplication.VERSION);
 			defaults.setProperty(KEY_RENDERER_DEFAULT, "renderers/classic/index.html");
+			defaults.setProperty(KEY_LEAGUE_DEFAULT, "Flashback Event (IC001)");
 			defaults.setProperty(KEY_WIDGET_WIDTH, "130");
 			defaults.setProperty(KEY_WIDGET_HEIGHT, "70");
 			FileOutputStream fos = new FileOutputStream(file);
@@ -82,12 +81,8 @@ public class BluemarlinConfig  {
 		return properties.getProperty(KEY_RENDERER_DEFAULT);
 	}
 
-//	public void save() {
-//		// https://docs.oracle.com/javase/tutorial/essential/exceptions/tryResourceClose.html
-//		try(FileOutputStream fos = new FileOutputStream(propertiesFile)) {
-//			super.store(fos, "BlackmarketProperties.store()");
-//		} catch (IOException e) {
-//			throw new BlackmarketRuntimeException(e);
-//		};
-//	}
+	public static CharSequence defaultLeague() {
+		return properties.getProperty(KEY_LEAGUE_DEFAULT);
+	}
+
 }

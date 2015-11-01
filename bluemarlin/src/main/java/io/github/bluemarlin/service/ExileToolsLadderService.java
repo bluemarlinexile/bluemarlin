@@ -14,7 +14,7 @@ public class ExileToolsLadderService extends Service<Void> {
 	
 	private final Logger logger = LoggerFactory.getLogger(this.getClass().getName());
 
-	private StringProperty result = new SimpleStringProperty("NONE");
+	private StringProperty result = new SimpleStringProperty("{}");
     public final StringProperty resultProperty() { return result; }
     
     public ExileToolsLadderService() {

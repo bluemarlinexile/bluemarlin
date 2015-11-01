@@ -50,7 +50,7 @@ public class SearchViewPane extends StackPane {
 		
 		// FIXME, hacky
 		if (!Main.DEVELOPMENT_MODE) {
-			while (exileToolsLadderService.resultProperty().getValue().equals("NONE")) {
+			while (exileToolsLadderService.resultProperty().getValue().equals("{}")) {
 				try {
 					Thread.sleep(1000);
 				} catch (InterruptedException e) {
