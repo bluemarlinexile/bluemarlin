@@ -51,7 +51,8 @@ public class BluemarlinApplication extends Application {
 		BorderPane root = new BorderPane();
 		primaryStage.setTitle(TITLE);
         primaryStage.setResizable(true);
-        primaryStage.setScene(new Scene(root, 900,600));
+        primaryStage.setScene(new Scene(root));
+        primaryStage.setMaximized(true);
         primaryStage.getIcons().add(new Image("/Atlantic_blue_marlin64x64.png"));
         
         BottomPane bottomPane = new BottomPane();

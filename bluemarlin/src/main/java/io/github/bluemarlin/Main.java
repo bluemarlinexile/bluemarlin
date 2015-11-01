@@ -20,9 +20,10 @@ package io.github.bluemarlin;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.URISyntaxException;
 
 import io.github.bluemarlin.ui.BluemarlinApplication;
-import io.github.bluemarlin.util.Renderers;
+import io.github.bluemarlin.util.DefaultAssets;
 import io.github.bluemarlin.util.config.BluemarlinConfig;
 import javafx.application.Application;
 
@@ -33,9 +34,10 @@ public class Main {
 	public static final boolean DURIAN_MODE_ENABLED = true;
 	public static final boolean RAW_RENDERER_ENABLED = false;
 
-	public static void main(String[] args) throws FileNotFoundException, IOException {
+	public static void main(String[] args) throws FileNotFoundException, IOException, URISyntaxException {
 		BluemarlinConfig.init();
-		Renderers.copyDefaultRenderers();
+//		DefaultAssets.copyDefaultRenderers();
+//		DefaultAssets.copyDefaultAudio();
         Application.launch(BluemarlinApplication.class, args);
     }
 

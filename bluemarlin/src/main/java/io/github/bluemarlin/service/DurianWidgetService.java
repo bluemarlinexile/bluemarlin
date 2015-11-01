@@ -1,16 +1,19 @@
 package io.github.bluemarlin.service;
 
+import java.nio.file.Paths;
 import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import io.github.bluemarlin.ui.searchtree.SearchTreeItem;
+import io.github.bluemarlin.util.config.BluemarlinConfig;
 import javafx.application.Platform;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
+import javafx.scene.media.AudioClip;
 
 public class DurianWidgetService extends Service<Void> {
 	
@@ -31,6 +34,11 @@ public class DurianWidgetService extends Service<Void> {
 				Integer total = newVal.getSearchResult().getTotal();
 				if (total != null) {
 					resultsFound.setValue(total + resultsFound.getValue());
+					if (resultsFound.intValue() > 0) {
+						String soundfile = Paths.get(BluemarlinConfig.defaultNotificationSound()).toAbsolutePath().toUri().toString();
+						AudioClip notificationSound = new AudioClip(soundfile);
+				        Platform.runLater(() -> notificationSound.play(1.0));
+					}
 				}
 			});
 		});

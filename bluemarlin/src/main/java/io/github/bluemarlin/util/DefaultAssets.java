@@ -28,20 +28,36 @@ import io.github.bluemarlin.Main;
  * @author thirdy
  *
  */
-public class Renderers {
-	public static void copyDefaultRenderers() {
+public class DefaultAssets {
+	public static void copyDefaultRenderers() throws URISyntaxException {
 		File renderersDirectory= new File("renderers");
+		System.out.println(renderersDirectory.getAbsolutePath());
 		if (!renderersDirectory.exists() || Main.DEVELOPMENT_MODE) {
-			try {
-				File source = Paths.get(Renderers.class.getResource("/default/renderers").toURI()).toFile();
+			System.out.println("NOW COPYING: " + renderersDirectory.getAbsolutePath());
+				File source = Paths.get(DefaultAssets.class.getResource("/default/renderers").toURI()).toFile();
 				File target = Paths.get(renderersDirectory.toURI()).toFile();
+				System.out.println("source: " + source.getAbsolutePath());
+				System.out.println("target: " + target.getAbsolutePath());
 
-				CopyFolder.copyFolder(source, target);
-			} catch (URISyntaxException e) {
-				throw new RuntimeException(e);
-			} catch (IOException e) {
-				throw new RuntimeException(e);
-			}
+//				CopyFolder.copyFolder(source, target);
+				System.out.println("COPYSUCCECS");
 		}
 	}
+	
+	// I think theres a bug with copying audio files
+//	public static void copyDefaultAudio() {
+//		File targetDirectory= new File(".");
+//		if (!targetDirectory.exists() || Main.DEVELOPMENT_MODE) {
+//			try {
+//				File source = Paths.get(DefaultAssets.class.getResource("/default/audio").toURI()).toFile();
+//				File target = Paths.get(targetDirectory.toURI()).toFile();
+//				
+//				CopyFolder.copyFolder(source, target);
+//			} catch (URISyntaxException e) {
+//				throw new RuntimeException(e);
+//			} catch (IOException e) {
+//				throw new RuntimeException(e);
+//			}
+//		}
+//	}
 }

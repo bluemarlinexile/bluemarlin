@@ -22,6 +22,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.net.URI;
 import java.util.Properties;
 
 import io.github.bluemarlin.Main;
@@ -39,6 +40,7 @@ public class BluemarlinConfig  {
 	private static final String KEY_BLUEMARLINE_VERSION = "bluemarline.version";
 	private static final String KEY_RENDERER_DEFAULT = "renderer.default";
 	private static final String KEY_LEAGUE_DEFAULT = "league.default";
+	private static final String KEY_NOTIFICATION_SOUND_DEFAULT = "notification.sound.default";
 	private static Properties properties;
 	
 	public static void init() throws FileNotFoundException, IOException {
@@ -59,6 +61,7 @@ public class BluemarlinConfig  {
 			defaults.setProperty(KEY_BLUEMARLINE_VERSION, BluemarlinApplication.VERSION);
 			defaults.setProperty(KEY_RENDERER_DEFAULT, "renderers/classic/index.html");
 			defaults.setProperty(KEY_LEAGUE_DEFAULT, "Flashback Event (IC001)");
+			defaults.setProperty(KEY_NOTIFICATION_SOUND_DEFAULT, "notification.wav");
 			defaults.setProperty(KEY_WIDGET_WIDTH, "130");
 			defaults.setProperty(KEY_WIDGET_HEIGHT, "70");
 			FileOutputStream fos = new FileOutputStream(file);
@@ -83,6 +86,10 @@ public class BluemarlinConfig  {
 
 	public static CharSequence defaultLeague() {
 		return properties.getProperty(KEY_LEAGUE_DEFAULT);
+	}
+
+	public static String defaultNotificationSound() {
+		return properties.getProperty(KEY_NOTIFICATION_SOUND_DEFAULT);
 	}
 
 }

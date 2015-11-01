@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>net.thirdy</groupId>
 	<artifactId>bluemarlin</artifactId>
-	<version>0.6</version>
+	<version>0.1</version>
 
 	<packaging>jar</packaging>
 
@@ -12,18 +12,13 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<bluemarlin.version>0.6</bluemarlin.version>
+		<bluemarlin.version>0.1</bluemarlin.version>
 		<mainClass>io.github.bluemarlin.Main</mainClass>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
 	</properties>
 
 	<dependencies>
-		<dependency>
-			<groupId>org.controlsfx</groupId>
-			<artifactId>controlsfx</artifactId>
-			<version>8.40.10-SNAPSHOT</version>
-		</dependency>
 		<dependency>
 			<groupId>com.mashape.unirest</groupId>
 			<artifactId>unirest-java</artifactId>
@@ -230,14 +225,14 @@
 							<outfile>target/bluemarlin.exe</outfile>
 							<jar>lib/jars/bluemarlin.jar</jar>
 							<errTitle>bluemarlin</errTitle>
-							<supportUrl>http://thirdy.github.io/bluemarlin/</supportUrl>
+							<supportUrl>http://bluemarlinexile.github.io/</supportUrl>
 							<classPath>
 								<mainClass>${mainClass}</mainClass>
 								<addDependencies>true</addDependencies>
 								<jarLocation>lib/jars</jarLocation>
 							</classPath>
 							<dontWrapJar>true</dontWrapJar>
-							<icon>logos/Bluemarlin-logo.ico</icon>
+							<icon>src/main/resources/Atlantic_blue_marlin64x64.ico</icon>
 							<jre>
 								<path>jre1.8.0_60</path>
 								<bundledJreAsFallback>true</bundledJreAsFallback>
@@ -253,7 +248,7 @@
 								<copyright>Copyright (C) 2015 Vicente de Rivera III</copyright>
 								<productVersion>1.0.0.0</productVersion>
 								<txtProductVersion>1.0</txtProductVersion>
-								<productName>Bluemarlin</productName>
+								<productName>bluemarlin</productName>
 								<internalName>bluemarlin</internalName>
 								<originalFilename>bluemarlin.exe</originalFilename>
 							</versionInfo>
@@ -272,14 +267,6 @@
 			<id>central</id>
 			<name>Central Repository</name>
 			<url>https://repo.maven.apache.org/maven2</url>
-		</repository>
-		<repository>
-			<id>oss-sonatype</id>
-			<name>oss-sonatype</name>
-			<url>https://oss.sonatype.org/content/repositories/snapshots/</url>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
 		</repository>
 	</repositories>
 </project>

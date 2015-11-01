@@ -35,18 +35,18 @@ public class SearchDirectory extends File {
 	public SearchDirectory() {
 		super("search");
 		
-		if (!this.exists() || Main.DEVELOPMENT_MODE) {
-			try {
-				File source = Paths.get(this.getClass().getResource("/default/search").toURI()).toFile();
-				File target = Paths.get(this.toURI()).toFile();
-
-				CopyFolder.copyFolder(source, target);
-			} catch (URISyntaxException e) {
-				throw new RuntimeException(e);
-			} catch (IOException e) {
-				throw new RuntimeException(e);
-			}
-		}
+//		if (!this.exists() || Main.DEVELOPMENT_MODE) {
+//			try {
+//				File source = Paths.get(this.getClass().getResource("/default/search").toURI()).toFile();
+//				File target = Paths.get(this.toURI()).toFile();
+//
+//				CopyFolder.copyFolder(source, target);
+//			} catch (URISyntaxException e) {
+//				throw new RuntimeException(e);
+//			} catch (IOException e) {
+//				throw new RuntimeException(e);
+//			}
+//		}
 		
 	}
 	

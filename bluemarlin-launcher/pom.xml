@@ -86,7 +86,7 @@
 							<outfile>target/bluemarlin-launcher.exe</outfile>
 							<jar>target/bluemarlin-launcher.jar</jar>
 							<errTitle>bluemarlin-launcher</errTitle>
-							<supportUrl>http://thirdy.github.io/bluemarlin/</supportUrl>
+							<supportUrl>http://bluemarlinexile.github.io/</supportUrl>
 							<classPath>
 								<mainClass>${mainClass}</mainClass>
 							</classPath>
