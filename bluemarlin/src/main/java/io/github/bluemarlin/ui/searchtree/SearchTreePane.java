@@ -17,6 +17,8 @@
  */
 package io.github.bluemarlin.ui.searchtree;
 
+import java.util.List;
+
 import io.searchbox.core.SearchResult;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -31,9 +33,10 @@ public class SearchTreePane extends StackPane {
 	
 	private ObjectProperty<SearchResult> searchResult = new SimpleObjectProperty<>();
 	public ObjectProperty<SearchResult> searchResultProperty() {return searchResult;}
+
+	SearchTreeView treeView = new SearchTreeView();
 	
 	public SearchTreePane() {
-		SearchTreeView treeView = new SearchTreeView();
 		getChildren().add(treeView);
 		
 		treeView.setOnMouseClicked((mouseEvent) -> {
@@ -41,12 +44,21 @@ public class SearchTreePane extends StackPane {
 	            TreeItem<SearchTreeItem> item = treeView.getSelectionModel().getSelectedItem();
 	            if (item != null && !item.getValue().isDirectory()) {
 	            	searchResult.unbind();
-	            	searchResult.bind(item.getValue().searchResultProperty());
 	            	
-	            	item.getValue().search();
+	            	if (item.getValue().hasDurianResultsProperty().getValue()) {
+	            		searchResult.setValue(item.getValue().searchResultProperty().getValue());
+	            		item.getValue().hasDurianResultsProperty().setValue(false);
+					} else {
+	            		searchResult.bind(item.getValue().searchResultProperty());
+						item.getValue().search();
+					}
 				}
 	        }
 		});
+	}
+
+	public List<SearchTreeItem> durianSearchTreeItems() {
+		return treeView.durianSearchTreeItems();
 	}
 	
 }

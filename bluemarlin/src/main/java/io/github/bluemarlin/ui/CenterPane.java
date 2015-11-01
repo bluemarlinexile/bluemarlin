@@ -19,7 +19,9 @@ package io.github.bluemarlin.ui;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
+import io.github.bluemarlin.ui.searchtree.SearchTreeItem;
 import io.github.bluemarlin.ui.searchtree.SearchTreePane;
 import io.github.bluemarlin.ui.searchview.SearchViewPane;
 import javafx.scene.control.Button;
@@ -33,18 +35,22 @@ import javafx.scene.layout.StackPane;
  *
  */
 public class CenterPane extends SplitPane {
+	
+	SearchTreePane leftSide = new SearchTreePane();
+	SearchViewPane rightSide = new SearchViewPane();
 
 	public CenterPane() {
 		setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
-
-		SearchTreePane leftSide = new SearchTreePane();
-		SearchViewPane rightSide = new SearchViewPane();
 		
 		rightSide.searchResultProperty().bind(leftSide.searchResultProperty());
 
 		getItems().addAll(leftSide, rightSide);
 
 		setDividerPositions(0.3f, 0.9f);
+	}
+
+	public List<SearchTreeItem> durianSearchTreeItems() {
+		return leftSide.durianSearchTreeItems();
 	}
 
 

@@ -42,7 +42,6 @@ public class BottomPane extends HBox {
 		
 		lastIndexUpdateService.setOnSucceeded(e -> lastIndexUpdateService.restart());
 		lastIndexUpdateService.setOnFailed	 (e -> lastIndexUpdateService.restart());
-		
 		lastIndexUpdateService.restart();
 	}
 }

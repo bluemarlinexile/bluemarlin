@@ -21,11 +21,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import io.github.bluemarlin.Main;
+import io.github.bluemarlin.service.DurianWidgetService;
 import io.github.bluemarlin.service.ExileToolsService;
+import io.github.bluemarlin.ui.widget.WidgetStage;
 import io.github.bluemarlin.util.LangContants;
 import io.jexiletools.es.ExileToolsSearchClient;
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
@@ -43,19 +46,28 @@ public class BluemarlinApplication extends Application {
 
     @Override 
     public void start(Stage primaryStage) throws Exception {
+    	exileToolsESClient = new ExileToolsSearchClient(BLUEMARLIN_API_KEY);
+    	
 		BorderPane root = new BorderPane();
 		primaryStage.setTitle(TITLE);
         primaryStage.setResizable(true);
         primaryStage.setScene(new Scene(root, 900,600));
+        primaryStage.getIcons().add(new Image("/Atlantic_blue_marlin64x64.png"));
         
         BottomPane bottomPane = new BottomPane();
         root.setBottom(bottomPane);
         
         CenterPane centerPane = new CenterPane();
         root.setCenter(centerPane);
-
-        exileToolsESClient = new ExileToolsSearchClient(BLUEMARLIN_API_KEY);
+        
+        DurianWidgetService durianWidgetService = new DurianWidgetService(centerPane.durianSearchTreeItems());
+        
+        WidgetStage widget = new WidgetStage(primaryStage, durianWidgetService);
+        primaryStage.setOnCloseRequest(e -> widget.close());
+        
+        durianWidgetService.restart();
         primaryStage.show();
+        widget.show();
     }
 
 	@Override

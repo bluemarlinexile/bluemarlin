@@ -4,6 +4,7 @@ import io.github.bluemarlin.ui.BluemarlinApplication;
 import io.github.bluemarlin.util.ex.BlackmarketException;
 import io.jexiletools.es.ExileToolsSearchException;
 import io.searchbox.core.SearchResult;
+import javafx.application.Platform;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -28,8 +29,7 @@ public class ExileToolsService extends Service<Void> {
             		updateMessage("Querying against Exile Tools Elastic Search Public API...");
             		SearchResult result = BluemarlinApplication.getExileToolsESClient().execute(searchJson.getValue());
             		
-            		searchResult.set(result);
-
+            		Platform.runLater(() -> searchResult.set(result));
 
 //        			// cache images
 //        			updateMessage("Caching images...");

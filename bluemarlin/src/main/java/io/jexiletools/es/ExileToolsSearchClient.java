@@ -18,14 +18,11 @@
 package io.jexiletools.es;
 
 import java.io.IOException;
-import java.util.List;
-import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import io.jexiletools.es.ExileToolsSearchAction.Builder;
-import io.jexiletools.es.model.json.ExileToolsHit;
 import io.searchbox.client.JestClientFactory;
 import io.searchbox.client.config.HttpClientConfig;
 import io.searchbox.client.http.JestHttpClient;
@@ -60,7 +57,8 @@ public class ExileToolsSearchClient {
 	}
 	
 	public SearchResult execute(String json) throws ExileToolsSearchException {
-		 logger.debug("~~~~ Executing search: {}{}", System.lineSeparator(), json);
+		logger.debug("Executing search");
+//		 logger.debug("~~~~ Executing search: {}{}", System.lineSeparator(), json);
 
 		 Builder builder = new ExileToolsSearchAction.Builder(json)
 		                                 .setHeader("Authorization", apiKey);
@@ -69,7 +67,7 @@ public class ExileToolsSearchClient {
 		 SearchResult result;
 		try {
 			result = client.execute(search);
-			logger.debug(result.getJsonString());
+//			logger.debug(result.getJsonString());
 			return result;
 		} catch (IOException e) {
 			throw new ExileToolsSearchException("Error while executing search for json: " + json, e);

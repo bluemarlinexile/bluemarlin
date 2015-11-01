@@ -22,7 +22,7 @@ import io.searchbox.core.search.sort.Sort;
 import io.searchbox.params.Parameters;
 import io.searchbox.params.SearchType;
 
-public class ExileToolsSearchAction extends AbstractAction<ExileToolsSearchResult> {
+public class ExileToolsSearchAction extends AbstractAction<SearchResult> {
 
 	    private String query;
 	    private List<Sort> sortList = new LinkedList<Sort>();
@@ -35,8 +35,9 @@ public class ExileToolsSearchAction extends AbstractAction<ExileToolsSearchResul
 	        setURI(buildURI());
 	    }
 
-	    public ExileToolsSearchResult createNewElasticSearchResult(String responseBody, int statusCode, String reasonPhrase, Gson gson) {
-	        return createNewElasticSearchResult(new ExileToolsSearchResult(gson), responseBody, statusCode, reasonPhrase, gson);
+	    public SearchResult createNewElasticSearchResult(String responseBody, int statusCode, String reasonPhrase, Gson gson) {
+//	        return createNewElasticSearchResult(new ExileToolsSearchResult(gson), responseBody, statusCode, reasonPhrase, gson);
+	        return createNewElasticSearchResult(new SearchResult(gson), responseBody, statusCode, reasonPhrase, gson);
 	    }
 
 	    public String getIndex() {

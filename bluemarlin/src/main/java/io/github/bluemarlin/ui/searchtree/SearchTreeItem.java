@@ -19,8 +19,12 @@ package io.github.bluemarlin.ui.searchtree;
 
 import java.io.File;
 
+import org.apache.commons.io.FilenameUtils;
+
 import io.github.bluemarlin.service.ExileToolsService;
+import io.github.bluemarlin.util.BluemarlineUtil;
 import io.searchbox.core.SearchResult;
+import javafx.beans.binding.Bindings;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -38,9 +42,15 @@ public class SearchTreeItem {
 
 	private ObjectProperty<SearchResult> searchResult = new SimpleObjectProperty<>();
 	public ObjectProperty<SearchResult> searchResultProperty() {return searchResult;}
+
+	private StringProperty displayName = new SimpleStringProperty();
+	public StringProperty displayNameProperty() {return displayName;}
 	
 	private BooleanProperty searchRunning = new SimpleBooleanProperty(false);
 	public BooleanProperty searchRunningProperty() { return searchRunning; }
+	
+	private BooleanProperty hasDurianResults = new SimpleBooleanProperty(false);
+	public BooleanProperty hasDurianResultsProperty() { return hasDurianResults; }
 	
 	private final ExileToolsService searchService = new ExileToolsService();
 	
@@ -48,6 +58,17 @@ public class SearchTreeItem {
 		this.file = file;
 		searchRunning.bind(searchService.runningProperty());
 		searchResult.bind(searchService.searchResultProperty());
+
+		displayName.bind(Bindings.createStringBinding(() -> {
+			String name = FilenameUtils.removeExtension(file.getName());
+			SearchResult value = searchResult.getValue();
+			if (value != null) {
+				name += "(" + value.getTotal() + ")" ;
+			}
+			return name;
+		}, searchResult));
+		
+		searchService.setOnFailed(e -> searchService.getException().printStackTrace());
 	}
 	
 	public boolean isDirectory() {
@@ -55,16 +76,22 @@ public class SearchTreeItem {
 	}
 	
 	public void search() {
-		searchService.restart();
+		if (!searchService.isRunning()) {
+			String jsonSearch = BluemarlineUtil.readFileToString(file);
+			searchService.searchJsonProperty().setValue(jsonSearch);
+			searchService.restart();
+		}
 	}
+	
+	public ExileToolsService getSearchService() { return searchService; }
 	
 	@Override
 	public String toString() {
-		return file.getName();
+		return FilenameUtils.removeExtension(file.getName());
 	}
 
-	public String getName() {
-		return file.getName();
+	public boolean isDurianSeachItem() {
+		return file.getParentFile().getName().equalsIgnoreCase("durian");
 	}
 
 }

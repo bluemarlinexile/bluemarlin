@@ -31,7 +31,7 @@ import com.google.common.base.Predicate;
 
 import io.github.bluemarlin.util.ex.BlackmarketRuntimeException;
 
-public class BlackmarketUtil {
+public class BluemarlineUtil {
 
 	public static final Predicate<String> NON_BLANK_STRING = new Predicate<String>() {
 

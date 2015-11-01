@@ -26,6 +26,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
 
+import io.github.bluemarlin.Main;
 import io.github.bluemarlin.ui.BluemarlinApplication;
 
 /**
@@ -35,6 +36,8 @@ import io.github.bluemarlin.ui.BluemarlinApplication;
  */
 public class BluemarlinConfig  {
 	
+	private static final String KEY_WIDGET_WIDTH = "widget.width";
+	private static final String KEY_WIDGET_HEIGHT = "widget.height";
 	private static final String KEY_BLUEMARLINE_VERSION = "bluemarline.version";
 	private static final String KEY_API_LADDER_LEAGUES = "api.ladder.leagues";
 	private static Properties properties;
@@ -51,11 +54,13 @@ public class BluemarlinConfig  {
 	}
 
 	private static void createIfNotExist(File file) throws IOException {
-		if (!file.exists()) {
+		if (!file.exists() || Main.DEVELOPMENT_MODE) {
 			file.createNewFile();
 			Properties defaults = new Properties();
 			defaults.setProperty(KEY_BLUEMARLINE_VERSION, BluemarlinApplication.VERSION);
 			defaults.setProperty(KEY_API_LADDER_LEAGUES, "flashback2,flashback2hc,standard,hardcore");
+			defaults.setProperty(KEY_WIDGET_WIDTH, "130");
+			defaults.setProperty(KEY_WIDGET_HEIGHT, "70");
 			FileOutputStream fos = new FileOutputStream(file);
 			defaults.store(fos, "defaults-auto-generated-by-bluemarline");
 			fos.close();
@@ -65,6 +70,16 @@ public class BluemarlinConfig  {
 	public static List<String> apiLadderLeagues() {
 		String ladderLeaguesStr = properties.getProperty(KEY_API_LADDER_LEAGUES);
 		return Arrays.asList(ladderLeaguesStr.split(","));
+	}
+
+	public static int widgetHeight() {
+		String widgetheight = properties.getProperty(KEY_WIDGET_HEIGHT);
+		return Integer.parseInt(widgetheight);
+	}
+	
+	public static int widgetWidth() {
+		String widgetWidth = properties.getProperty(KEY_WIDGET_WIDTH);
+		return Integer.parseInt(widgetWidth);
 	}
 
 //	public void save() {
