@@ -14,7 +14,7 @@
             "or" : {
               "filters" : [ {
                 "term" : {
-                  "attributes.itemType" : "Gloves"
+                  "attributes.itemType" : "Ring"
                 }
               } ]
             }
