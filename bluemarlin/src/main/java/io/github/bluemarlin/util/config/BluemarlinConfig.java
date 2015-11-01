@@ -60,7 +60,7 @@ public class BluemarlinConfig  {
 			Properties defaults = new Properties();
 			defaults.setProperty(KEY_BLUEMARLINE_VERSION, BluemarlinApplication.VERSION);
 			defaults.setProperty(KEY_RENDERER_DEFAULT, "renderers/classic/index.html");
-			defaults.setProperty(KEY_LEAGUE_DEFAULT, "Flashback Event (IC001)");
+			defaults.setProperty(KEY_LEAGUE_DEFAULT, "Flashback Event HC (IC002)");
 			defaults.setProperty(KEY_NOTIFICATION_SOUND_DEFAULT, "notification.wav");
 			defaults.setProperty(KEY_WIDGET_WIDTH, "130");
 			defaults.setProperty(KEY_WIDGET_HEIGHT, "70");
