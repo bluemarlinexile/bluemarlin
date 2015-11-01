@@ -1,0 +1,65 @@
+{
+  "size" : 100,
+  "query" : {
+    "filtered" : {
+      "filter" : {
+        "and" : {
+          "filters" : [ {
+            "or" : {
+              "filters" : [ 
+			  
+							{
+								"and" : {
+									  "filters" : [ {
+										"term" : {
+											  "info.name" : "The Doctor"
+											}
+									  }, {
+										"range" : {
+										  "shop.chaosEquiv" : {
+											"gte" : 0.006,
+											"lte" : 240.0
+										  }
+										}  
+									  } ]
+								}
+							},
+							
+							{
+								"and" : {
+									  "filters" : [ {
+										"term" : {
+											  "info.name" : "The Pack Leader"
+											}
+									  }, {
+										"range" : {
+										  "shop.chaosEquiv" : {
+											"gte" : 0.006,
+											"lte" : 15.0
+										  }
+										}  
+									  } ]
+								}
+							}
+			  
+			  ]
+            }
+          }, {
+            "term" : {
+              "attributes.league" : "Flashback Event (IC001)"
+            }
+          }, {
+			"term" : {
+			  "shop.verified" : "yes"
+			}
+		  } ]
+        }
+      }
+    }
+  },
+  "sort" : [ {
+    "shop.chaosEquiv" : {
+      "order" : "asc"
+    }
+  } ]
+}

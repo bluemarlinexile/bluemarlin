@@ -37,7 +37,14 @@ public class ExileToolsSearchAction extends AbstractAction<SearchResult> {
 
 	    public SearchResult createNewElasticSearchResult(String responseBody, int statusCode, String reasonPhrase, Gson gson) {
 //	        return createNewElasticSearchResult(new ExileToolsSearchResult(gson), responseBody, statusCode, reasonPhrase, gson);
-	        return createNewElasticSearchResult(new SearchResult(gson), responseBody, statusCode, reasonPhrase, gson);
+	        try {
+	        	return createNewElasticSearchResult(new SearchResult(gson), responseBody, statusCode, reasonPhrase, gson);
+			} catch (Throwable e) {
+				throw new RuntimeException("Problem while parsing result: " 
+						+ System.lineSeparator()
+						+ responseBody
+						, e);
+			}
 	    }
 
 	    public String getIndex() {

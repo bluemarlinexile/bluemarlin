@@ -18,12 +18,13 @@
 package io.github.bluemarlin.ui.searchtree;
 
 import java.io.File;
+import java.io.IOException;
 
 import org.apache.commons.io.FilenameUtils;
 
 import io.github.bluemarlin.service.ExileToolsService;
-import io.github.bluemarlin.util.BluemarlineUtil;
-import io.searchbox.core.SearchResult;
+import io.github.bluemarlin.ui.searchview.Search;
+import io.github.bluemarlin.util.Dialogs;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.ObjectProperty;
@@ -39,9 +40,9 @@ import javafx.beans.property.StringProperty;
 public class SearchTreeItem {
 	
 	private File file;
-
-	private ObjectProperty<SearchResult> searchResult = new SimpleObjectProperty<>();
-	public ObjectProperty<SearchResult> searchResultProperty() {return searchResult;}
+	
+	private ObjectProperty<Search> search = new SimpleObjectProperty<>();
+	public ObjectProperty<Search> searchProperty() {return search;}
 
 	private StringProperty displayName = new SimpleStringProperty();
 	public StringProperty displayNameProperty() {return displayName;}
@@ -49,24 +50,29 @@ public class SearchTreeItem {
 	private BooleanProperty searchRunning = new SimpleBooleanProperty(false);
 	public BooleanProperty searchRunningProperty() { return searchRunning; }
 	
-	private BooleanProperty hasDurianResults = new SimpleBooleanProperty(false);
-	public BooleanProperty hasDurianResultsProperty() { return hasDurianResults; }
+	private BooleanProperty fromDurianSearch = new SimpleBooleanProperty(false);
+	public BooleanProperty fromDurianSearchProperty() { return fromDurianSearch; }
 	
 	private final ExileToolsService searchService = new ExileToolsService();
 	
 	public SearchTreeItem(File file) {
 		this.file = file;
 		searchRunning.bind(searchService.runningProperty());
-		searchResult.bind(searchService.searchResultProperty());
+		search.bind(searchService.searchProperty());
 
 		displayName.bind(Bindings.createStringBinding(() -> {
 			String name = FilenameUtils.removeExtension(file.getName());
-			SearchResult value = searchResult.getValue();
+			Search value = search.getValue();
 			if (value != null) {
-				name += "(" + value.getTotal() + ")" ;
+				name += " (" + value.getSearchResult().getTotal() + ")";
+				if (value.getSearchResult().getTotal() > 0) {
+					if (fromDurianSearch.getValue()) {
+						name = "! " + name;
+					}
+				}
 			}
 			return name;
-		}, searchResult));
+		}, search, fromDurianSearch));
 		
 		searchService.setOnFailed(e -> searchService.getException().printStackTrace());
 	}
@@ -75,11 +81,17 @@ public class SearchTreeItem {
 		return file.isDirectory();
 	}
 	
-	public void search() {
+	public void search(boolean fromDurianService) {
 		if (!searchService.isRunning()) {
-			String jsonSearch = BluemarlineUtil.readFileToString(file);
-			searchService.searchJsonProperty().setValue(jsonSearch);
-			searchService.restart();
+			SearchFile sf = null;
+			try {
+				sf = new SearchFile(file);
+				searchService.searchFileProperty().setValue(sf);
+				fromDurianSearch.setValue(fromDurianService);
+				searchService.restart();
+			} catch (IOException e) {
+				Dialogs.showExceptionDialog(e);
+			}
 		}
 	}
 	

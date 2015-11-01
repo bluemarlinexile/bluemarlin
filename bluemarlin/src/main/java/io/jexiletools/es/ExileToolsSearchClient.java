@@ -69,8 +69,11 @@ public class ExileToolsSearchClient {
 			result = client.execute(search);
 //			logger.debug(result.getJsonString());
 			return result;
-		} catch (IOException e) {
-			throw new ExileToolsSearchException("Error while executing search for json: " + json, e);
+		} catch (Throwable e) {
+			Exception ex = new ExileToolsSearchException("Error while executing search for json: "
+						+ System.lineSeparator()
+						+ json, e);
+			return new SearchResultErrorResult(ex);
 		}
 	}
 	

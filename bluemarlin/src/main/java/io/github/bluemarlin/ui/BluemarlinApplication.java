@@ -65,7 +65,7 @@ public class BluemarlinApplication extends Application {
         WidgetStage widget = new WidgetStage(primaryStage, durianWidgetService);
         primaryStage.setOnCloseRequest(e -> widget.close());
         
-        durianWidgetService.restart();
+        if(Main.DURIAN_MODE_ENABLED) durianWidgetService.restart();
         primaryStage.show();
         widget.show();
     }

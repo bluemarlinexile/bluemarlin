@@ -15,38 +15,33 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
-package io.github.bluemarlin.ui;
+package io.github.bluemarlin.util;
 
-import java.util.List;
+import java.io.File;
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.nio.file.Paths;
 
-import io.github.bluemarlin.ui.searchtree.SearchTreeItem;
-import io.github.bluemarlin.ui.searchtree.SearchTreePane;
-import io.github.bluemarlin.ui.searchview.SearchViewPane;
-import javafx.scene.control.SplitPane;
+import io.github.bluemarlin.Main;
 
 /**
  * @author thirdy
  *
  */
-public class CenterPane extends SplitPane {
-	
-	SearchTreePane leftSide = new SearchTreePane();
-	SearchViewPane rightSide = new SearchViewPane();
+public class Renderers {
+	public static void copyDefaultRenderers() {
+		File renderersDirectory= new File("renderers");
+		if (!renderersDirectory.exists() || Main.DEVELOPMENT_MODE) {
+			try {
+				File source = Paths.get(Renderers.class.getResource("/default/renderers").toURI()).toFile();
+				File target = Paths.get(renderersDirectory.toURI()).toFile();
 
-	public CenterPane() {
-		setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
-		
-		rightSide.searchProperty().bind(leftSide.searchProperty());
-
-		getItems().addAll(leftSide, rightSide);
-
-		setDividerPositions(0.3f, 0.9f);
+				CopyFolder.copyFolder(source, target);
+			} catch (URISyntaxException e) {
+				throw new RuntimeException(e);
+			} catch (IOException e) {
+				throw new RuntimeException(e);
+			}
+		}
 	}
-
-	public List<SearchTreeItem> durianSearchTreeItems() {
-		return leftSide.durianSearchTreeItems();
-	}
-
-
-
 }

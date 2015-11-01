@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script>
+
+	/*
+	 Variables from Bluemarline application
+	 - blueMarlineCallback
+	 - searchFile
+	 - searchResult
+     - ladderOnlinePlayers
+	*/
+	function onBluemarlineReady() {
+		$("#result-content").text(searchResult.getJsonString());
+		$("#query-content").text(searchFile.getJsonSearch());
+		$("#ladder-content").text(ladderOnlinePlayers);
+	}
+
+$(document).ready(function(){
+
+});
+</script>
+</head>
+<body>
+<h2>Result</h2>
+
+<pre id="result-content"></pre>
+
+<h2>Query</h2>
+
+<pre id="query-content"></pre>
+
+<h2>Ladder Online Players</h2>
+
+<pre id="ladder-content"></pre>
+ 
+</body>
+</html>

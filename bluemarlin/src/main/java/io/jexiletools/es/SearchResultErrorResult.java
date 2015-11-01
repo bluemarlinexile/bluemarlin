@@ -15,38 +15,23 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
-package io.github.bluemarlin.ui;
+package io.jexiletools.es;
 
-import java.util.List;
+import org.apache.commons.lang3.exception.ExceptionUtils;
 
-import io.github.bluemarlin.ui.searchtree.SearchTreeItem;
-import io.github.bluemarlin.ui.searchtree.SearchTreePane;
-import io.github.bluemarlin.ui.searchview.SearchViewPane;
-import javafx.scene.control.SplitPane;
+import com.google.gson.Gson;
+
+import io.searchbox.core.SearchResult;
 
 /**
  * @author thirdy
  *
  */
-public class CenterPane extends SplitPane {
-	
-	SearchTreePane leftSide = new SearchTreePane();
-	SearchViewPane rightSide = new SearchViewPane();
+public class SearchResultErrorResult extends SearchResult {
 
-	public CenterPane() {
-		setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
-		
-		rightSide.searchProperty().bind(leftSide.searchProperty());
-
-		getItems().addAll(leftSide, rightSide);
-
-		setDividerPositions(0.3f, 0.9f);
+	public SearchResultErrorResult(Exception ex) {
+		super((Gson) null);
+		this.setErrorMessage(ExceptionUtils.getStackTrace(ex));
 	}
-
-	public List<SearchTreeItem> durianSearchTreeItems() {
-		return leftSide.durianSearchTreeItems();
-	}
-
-
 
 }

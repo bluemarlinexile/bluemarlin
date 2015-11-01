@@ -21,34 +21,50 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.file.Paths;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import io.github.bluemarlin.Main;
-import io.github.bluemarlin.util.CopyFolder;
 
 /**
  * @author thirdy
  *
  */
-public class SearchDirectory extends File {
-	private static final long serialVersionUID = 1L;
-
-	public SearchDirectory() {
-		super("search");
-		
-		if (!this.exists() || Main.DEVELOPMENT_MODE) {
-			try {
-				File source = Paths.get(this.getClass().getResource("/default/search").toURI()).toFile();
-				File target = Paths.get(this.toURI()).toFile();
-
-				CopyFolder.copyFolder(source, target);
-			} catch (URISyntaxException e) {
-				throw new RuntimeException(e);
-			} catch (IOException e) {
-				throw new RuntimeException(e);
-			}
-		}
-		
+public class SearchFile {
+	
+	private String jsonSearch;
+	private String renderer;
+	
+	public String getJsonSearch() {
+		return jsonSearch;
+	}
+	public String getRenderer() {
+		return renderer;
 	}
 	
+	public SearchFile(File file) throws IOException {
+		List<String> lines = FileUtils.readLines(file, "UTF-8");
+		
+		List<String> comments = lines.stream()
+				.filter(l -> l.startsWith("`"))
+				.collect(Collectors.toList());
+		
+		renderer = comments.stream()
+				.filter(c -> c.contains("$renderer")).findFirst()
+				.orElse("classic");
+		
+		if (!"classic".equals(renderer)) {
+			renderer = StringUtils.substringAfter(renderer, "=");
+		} else {
+			renderer = "renderers/classic/index.html";
+		}
+		
+		jsonSearch = lines.stream()
+				.filter(l -> !l.startsWith("`"))
+				.collect(Collectors.joining(System.lineSeparator()));
+	}
 
 }

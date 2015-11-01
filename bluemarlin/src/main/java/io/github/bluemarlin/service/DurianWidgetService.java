@@ -2,17 +2,13 @@ package io.github.bluemarlin.service;
 
 import java.util.List;
 
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import io.github.bluemarlin.ui.searchtree.SearchTreeItem;
-import io.github.bluemarlin.util.UrlReaderUtil;
 import javafx.application.Platform;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 
@@ -31,11 +27,10 @@ public class DurianWidgetService extends Service<Void> {
 		setOnFailed	 (e -> goAgain());
 		
 		searchTreeItems.stream().forEach(sti -> {
-			sti.searchResultProperty().addListener((observable, oldVal, newVal) -> {
-				System.out.println("new total: " + newVal.getTotal());
-				resultsFound.setValue(newVal.getTotal() + resultsFound.getValue());
-				if (newVal.getTotal() > 0) {
-					sti.hasDurianResultsProperty().setValue(true);
+			sti.searchProperty().addListener((observable, oldVal, newVal) -> {
+				Integer total = newVal.getSearchResult().getTotal();
+				if (total != null) {
+					resultsFound.setValue(total + resultsFound.getValue());
 				}
 			});
 		});
@@ -68,7 +63,9 @@ public class DurianWidgetService extends Service<Void> {
 		String result = "SUCCESS";
 		
 		for (SearchTreeItem sti : searchTreeItems) {
-				Platform.runLater(() -> sti.search());
+				Platform.runLater(() -> {
+					sti.search(true);
+				});
 		}
 		
 		return result;

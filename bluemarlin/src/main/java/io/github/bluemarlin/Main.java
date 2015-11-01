@@ -22,6 +22,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import io.github.bluemarlin.ui.BluemarlinApplication;
+import io.github.bluemarlin.util.Renderers;
 import io.github.bluemarlin.util.config.BluemarlinConfig;
 import javafx.application.Application;
 
@@ -29,9 +30,12 @@ import javafx.application.Application;
 public class Main {
 	
 	public static final boolean DEVELOPMENT_MODE = true;
+	public static final boolean DURIAN_MODE_ENABLED = true;
+	public static final boolean RAW_RENDERER_ENABLED = false;
 
 	public static void main(String[] args) throws FileNotFoundException, IOException {
 		BluemarlinConfig.init();
+		Renderers.copyDefaultRenderers();
         Application.launch(BluemarlinApplication.class, args);
     }
 

@@ -1,35 +1,31 @@
 package io.github.bluemarlin.service;
 
 import io.github.bluemarlin.ui.BluemarlinApplication;
-import io.github.bluemarlin.util.ex.BlackmarketException;
-import io.jexiletools.es.ExileToolsSearchException;
+import io.github.bluemarlin.ui.searchtree.SearchFile;
+import io.github.bluemarlin.ui.searchview.Search;
 import io.searchbox.core.SearchResult;
 import javafx.application.Platform;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 
 public class ExileToolsService extends Service<Void> {
 	
-	private ObjectProperty<SearchResult> searchResult = new SimpleObjectProperty<>();
-	public ObjectProperty<SearchResult> searchResultProperty() {return searchResult;}
+	private ObjectProperty<Search> search = new SimpleObjectProperty<>();
+	public ObjectProperty<Search> searchProperty() {return search;}
 	
-	private StringProperty searchJson = new SimpleStringProperty();
-    public final StringProperty searchJsonProperty() { return searchJson; }
+	private ObjectProperty<SearchFile> searchFile = new SimpleObjectProperty<>();
+	public ObjectProperty<SearchFile> searchFileProperty() {return searchFile;}
     
 	@Override
     protected Task<Void> createTask() {
         return new Task<Void>() {    
             @Override protected Void call() throws Exception {
-            	try {
-
             		updateMessage("Querying against Exile Tools Elastic Search Public API...");
-            		SearchResult result = BluemarlinApplication.getExileToolsESClient().execute(searchJson.getValue());
+            		SearchResult result = BluemarlinApplication.getExileToolsESClient().execute(searchFile.getValue().getJsonSearch());
             		
-            		Platform.runLater(() -> searchResult.set(result));
+            		Platform.runLater(() -> search.set(new Search(searchFile.getValue(), result)));
 
 //        			// cache images
 //        			updateMessage("Caching images...");
@@ -43,15 +39,7 @@ public class ExileToolsService extends Service<Void> {
 					// online status
 //					updateMessage("Looking up player status...");
 					
-					
-					
         			return null;
-        		} catch (ExileToolsSearchException e) {
-        			e.printStackTrace();
-        			String msg = "Error while running search to Exile Tools ES API";
-        			updateMessage(e.getMessage());
-					throw new BlackmarketException(msg, e);
-        		}
             }
 			
         };

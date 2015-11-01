@@ -17,11 +17,20 @@
  */
 package io.github.bluemarlin.ui.searchview;
 
-import io.searchbox.core.SearchResult;
+import java.nio.file.Paths;
+
+import io.github.bluemarlin.Main;
+import io.github.bluemarlin.service.ExileToolsLadderService;
+import io.github.bluemarlin.util.Dialogs;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.concurrent.Worker;
+import javafx.concurrent.Worker.State;
 import javafx.scene.Node;
 import javafx.scene.layout.StackPane;
+import javafx.scene.web.WebEngine;
+import javafx.scene.web.WebView;
+import netscape.javascript.JSObject;
 
 /**
  * @author thirdy
@@ -29,14 +38,59 @@ import javafx.scene.layout.StackPane;
  */
 public class SearchViewPane extends StackPane {
 	
-	private ObjectProperty<SearchResult> searchResult = new SimpleObjectProperty<>();
-	public ObjectProperty<SearchResult> searchResultProperty() {return searchResult;}
+	private ObjectProperty<Search> search = new SimpleObjectProperty<>();
+	public ObjectProperty<Search> searchProperty() {return search;}
 	
 	public SearchViewPane() {
-		SearchViewRenderer viewRenderer = new RawSearchViewRenderer(); 
-		viewRenderer.searchResultProperty().bind(searchResult);
 		
-		getChildren().add((Node)viewRenderer);
+		ExileToolsLadderService exileToolsLadderService = new ExileToolsLadderService();
+		exileToolsLadderService.restart();
+		
+		// FIXME, hacky
+		while (exileToolsLadderService.resultProperty().getValue().equals("NONE")) {
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				throw new RuntimeException(e);
+			}
+		}
+		// FIXME, hacky
+		
+		SearchViewRendererCallback blueMarlineCallback = new SearchViewRendererCallback();
+		
+		if (Main.RAW_RENDERER_ENABLED) {
+			RawSearchViewRenderer viewRenderer = new RawSearchViewRenderer(); 
+			viewRenderer.searchProperty().bind(search);
+			getChildren().add((Node)viewRenderer);
+		} else {
+			WebView webView = new WebView();
+			WebEngine webEngine = webView.getEngine();
+
+			search.addListener((observ, oldVal, newValue) -> {
+				if (newValue != null) {
+					java.net.URI uri = Paths.get(
+							search.getValue().getSearchFile().getRenderer()).toAbsolutePath().toUri();
+					webEngine.load(uri.toString());
+				}
+			});
+			
+			webEngine.getLoadWorker().stateProperty().addListener((observ, oldVal, newVal) -> {
+				if (newVal.equals(Worker.State.SUCCEEDED)) {
+					JSObject window = (JSObject) webEngine.executeScript("window");
+					window.setMember("blueMarlineCallback", blueMarlineCallback);
+					window.setMember("searchFile", search.getValue().getSearchFile());
+					window.setMember("searchResult", search.getValue().getSearchResult());
+					window.setMember("ladderOnlinePlayers", exileToolsLadderService.resultProperty().getValue());
+					webEngine.executeScript("onBluemarlineReady()");
+				}
+			});
+		
+			
+			// setup callbacks
+			webEngine.setOnAlert(e -> Dialogs.showInfo(e.getData()));
+			
+			getChildren().add(webView);
+		}
 		
 	}
 	

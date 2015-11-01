@@ -17,13 +17,30 @@
  */
 package io.github.bluemarlin.ui.searchview;
 
+import io.github.bluemarlin.ui.searchtree.SearchFile;
 import io.searchbox.core.SearchResult;
-import javafx.beans.property.ObjectProperty;
 
 /**
  * @author thirdy
  *
  */
-public interface SearchViewRenderer {
-	ObjectProperty<SearchResult> searchResultProperty();
+public class Search {
+	
+	private SearchFile searchFile;
+	private SearchResult searchResult;
+	
+	public Search(SearchFile searchFile, SearchResult searchResult) {
+		this.searchFile = searchFile;
+		this.searchResult = searchResult;
+	}
+	
+	public SearchFile getSearchFile() {
+		return searchFile;
+	}
+	public SearchResult getSearchResult() {
+		return searchResult;
+	}
+	
+	
+
 }

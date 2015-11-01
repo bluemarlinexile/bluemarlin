@@ -109,23 +109,6 @@
 								"and" : {
 									  "filters" : [ {
 										"term" : {
-											  "info.name" : "The Doctor"
-											}
-									  }, {
-										"range" : {
-										  "shop.chaosEquiv" : {
-											"gte" : 0.006,
-											"lte" : 240.0
-										  }
-										}  
-									  } ]
-								}
-							},
-							
-							{
-								"and" : {
-									  "filters" : [ {
-										"term" : {
 											  "info.name" : "Rainbowstride Conjurer Boots"
 											}
 									  }, {
@@ -201,23 +184,6 @@
 										  "shop.chaosEquiv" : {
 											"gte" : 0.006,
 											"lte" : 40.0
-										  }
-										}  
-									  } ]
-								}
-							},
-							
-							{
-								"and" : {
-									  "filters" : [ {
-										"term" : {
-											  "info.name" : "The Pack Leader"
-											}
-									  }, {
-										"range" : {
-										  "shop.chaosEquiv" : {
-											"gte" : 0.006,
-											"lte" : 15.0
 										  }
 										}  
 									  } ]
