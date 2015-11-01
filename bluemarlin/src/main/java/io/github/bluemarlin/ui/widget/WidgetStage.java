@@ -94,19 +94,21 @@ public class WidgetStage extends Stage {
             	WidgetStage.this.setY(me.getScreenY() - initY);
             }
         });
-       
-	      Button showBlueMarline = new Button("Bluemarline");
-	      showBlueMarline.setOnAction(e -> {
-	    	  	  parent.setIconified(false);
-	    	  	  parent.toFront();
-	          });
-	      showBlueMarline.setFont(Font.font(Font.getDefault().getFamily(), 10));
-	      showBlueMarline.setPrefSize(80, 5);
+        
 	      
 	    Label durianResultsFoundLabel = new Label();
 	    durianResultsFoundLabel.textProperty().bind(
 	    		Bindings.concat("Found: ", durianWidgetService.resultsFoundProperty().asString())
 	    		);
+       
+	      Button showBlueMarline = new Button("Bluemarline");
+	      showBlueMarline.setOnAction(e -> {
+	    	  	  parent.setIconified(false);
+	    	  	  parent.toFront();
+	    	  	durianWidgetService.resultsFoundProperty().setValue(0);
+	          });
+	      showBlueMarline.setFont(Font.font(Font.getDefault().getFamily(), 10));
+	      showBlueMarline.setPrefSize(80, 5);
         
         Label durianStatusLabel = new Label();
         durianStatusLabel.textProperty().bind(durianWidgetService.messageProperty());

@@ -25,7 +25,6 @@ import io.github.bluemarlin.util.Dialogs;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.concurrent.Worker;
-import javafx.concurrent.Worker.State;
 import javafx.scene.Node;
 import javafx.scene.layout.StackPane;
 import javafx.scene.web.WebEngine;
@@ -47,11 +46,13 @@ public class SearchViewPane extends StackPane {
 		exileToolsLadderService.restart();
 		
 		// FIXME, hacky
-		while (exileToolsLadderService.resultProperty().getValue().equals("NONE")) {
-			try {
-				Thread.sleep(1000);
-			} catch (InterruptedException e) {
-				throw new RuntimeException(e);
+		if (!Main.DEVELOPMENT_MODE) {
+			while (exileToolsLadderService.resultProperty().getValue().equals("NONE")) {
+				try {
+					Thread.sleep(1000);
+				} catch (InterruptedException e) {
+					throw new RuntimeException(e);
+				}
 			}
 		}
 		// FIXME, hacky
@@ -68,9 +69,12 @@ public class SearchViewPane extends StackPane {
 
 			search.addListener((observ, oldVal, newValue) -> {
 				if (newValue != null) {
-					java.net.URI uri = Paths.get(
-							search.getValue().getSearchFile().getRenderer()).toAbsolutePath().toUri();
-					webEngine.load(uri.toString());
+					String renderer = search.getValue().getSearchFile().getRenderer();
+					
+					if (renderer.startsWith("renderers")) {
+						renderer = Paths.get(renderer).toAbsolutePath().toUri().toString();
+					}
+					webEngine.load(renderer);
 				}
 			});
 			

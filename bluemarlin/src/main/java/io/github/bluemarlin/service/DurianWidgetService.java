@@ -49,7 +49,8 @@ public class DurianWidgetService extends Service<Void> {
             	updateMessage("Running Durian Service..");
 				String lastUpdate = retrieveIndexerLastUpdate();
 
-				for (int i = 6; i >= 0; i--) {
+				int ten_mins = 60 * 10;
+				for (int i = ten_mins; i >= 0; i--) {
 					Thread.sleep(1000);
 					final int _i = i;
 					updateMessage(String.format("Checking in %d sec..", _i));
