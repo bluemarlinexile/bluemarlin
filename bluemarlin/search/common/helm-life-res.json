@@ -14,20 +14,20 @@
             "or" : {
               "filters" : [ {
                 "term" : {
-                  "attributes.itemType" : "Amulet"
+                  "attributes.itemType" : "Helmet"
                 }
               } ]
             }
           }, {
             "range" : {
               "modsPseudo.maxLife" : {
-                "gte" : 70.0
+                "gte" : 80.0
               }
             }
           }, {
             "range" : {
               "modsPseudo.eleResistTotal" : {
-                "gte" : 80.0
+                "gte" : 70.0
               }
             }
           }, {

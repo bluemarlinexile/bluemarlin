@@ -14,7 +14,7 @@
             "or" : {
               "filters" : [ {
                 "term" : {
-                  "attributes.itemType" : "Amulet"
+                  "attributes.itemType" : "Gloves"
                 }
               } ]
             }
@@ -27,14 +27,14 @@
           }, {
             "range" : {
               "modsPseudo.eleResistTotal" : {
-                "gte" : 80.0
+                "gte" : 60.0
               }
             }
           }, {
             "range" : {
               "shop.chaosEquiv" : {
                 "gte" : 1.0,
-                "lte" : 15.0
+                "lte" : 30.0
               }
             }
           }, {
