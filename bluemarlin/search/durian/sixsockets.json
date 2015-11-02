@@ -31,7 +31,13 @@
 			"term" : {
 			  "shop.verified" : "yes"
 			}
-		  } ]
+		  }, {
+              "range": {
+                "shop.modified": {
+                  "gte": $TWENTY_MINS_AGO_IN_MILLISEC
+                }
+              }
+          } ]
         }
       }
     }

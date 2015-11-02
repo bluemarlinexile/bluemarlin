@@ -19,15 +19,13 @@ package io.github.bluemarlin.ui.searchtree;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.URISyntaxException;
-import java.nio.file.Paths;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
 
-import io.github.bluemarlin.Main;
 import io.github.bluemarlin.util.config.BluemarlinConfig;
 
 /**
@@ -63,9 +61,13 @@ public class SearchFile {
 			renderer = StringUtils.substringAfter(renderer, "=");
 		}
 		
+		int twentyMinsInMillis = 20 * 60 * 1000;
+		long timeNowInMillis = (new Date()).getTime();
+		String twentyMinsAgoInMillis = String.valueOf( timeNowInMillis - twentyMinsInMillis );
 		jsonSearch = lines.stream()
 				.filter(l -> !l.startsWith("`"))
 				.map(l -> l.replace("$DEFAULT_LEAGUE", BluemarlinConfig.defaultLeague()))
+				.map(l -> l.replace("$TWENTY_MINS_AGO_IN_MILLISEC", twentyMinsAgoInMillis))
 				.collect(Collectors.joining(System.lineSeparator()));
 	}
 

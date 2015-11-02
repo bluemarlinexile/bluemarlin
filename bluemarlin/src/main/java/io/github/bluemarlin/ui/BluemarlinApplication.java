@@ -41,7 +41,7 @@ public class BluemarlinApplication extends Application {
 	private final Logger logger = LoggerFactory.getLogger(this.getClass().getName());
 
 	private static final String BLUEMARLIN_API_KEY = "31db172a8b734e566dfe3211c0752862";
-	public static final String VERSION = "Version: 0.1" + (Main.DEVELOPMENT_MODE ? " [DEVELOPMENT MODE]" : LangContants.STRING_EMPTY);
+	public static final String VERSION = "Version: 0.1.1" + (Main.DEVELOPMENT_MODE ? " [DEVELOPMENT MODE]" : LangContants.STRING_EMPTY);
 	private static final String TITLE = "Bluemarlin " + VERSION;
 
     @Override 
